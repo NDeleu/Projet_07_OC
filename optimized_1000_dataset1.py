@@ -1,7 +1,4 @@
 import csv
-import time
-
-start_time = time.time()
 
 list_test = []
 
@@ -60,7 +57,3 @@ def optimized(value_limit, list_test):
     return best_benef, cost_action_best_comb, best_combinaison
 
 print(optimized(500, list_test))
-
-end_time = time.time()
-
-print(end_time - start_time)
