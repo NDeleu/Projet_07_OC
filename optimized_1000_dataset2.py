@@ -1,16 +1,22 @@
 import csv
 
-list_test = []
+def open_data(args):
+    list_test = []
 
-with open("docs/dataset2_Python+P7.csv") as fichier_csv:
+    for cd_data in args:
+        with open(cd_data) as fichier_csv:
 
-    reader = csv.reader(fichier_csv, delimiter=",")
-    next(reader)
+            reader = csv.reader(fichier_csv, delimiter=",")
+            next(reader)
 
-    for ligne in reader:
-        if float(ligne[1]) > 0 and 0 < float(ligne[2]) <= 100:
-            el_dict = {"name": ligne[0], "amount": int((float(ligne[1]))*100), "benefice": ((float(ligne[1]))*(float(ligne[2]))/100)}
-            list_test.append(el_dict)
+            for ligne in reader:
+                if float(ligne[1]) > 0 and 0 < float(ligne[2]) <= 100:
+                    el_dict = {"name": ligne[0],
+                               "amount": int((float(ligne[1])) * 100),
+                               "benefice": ((float(ligne[1])) * (
+                                   float(ligne[2])) / 100)}
+                    list_test.append(el_dict)
+    return list_test
 
 def gener_matrice(value_limit, list_test):
     matrice = [[0 for x in range(value_limit + 1)] for x in range(len(list_test) + 1)]
@@ -46,7 +52,8 @@ def gener_good_list(value_limit, list_test, matrice):
 def benef_action_comb(matrice):
     return matrice[-1][-1]
 
-def optimized(value_limit, list_test):
+def optimized(value_limit, *args):
+    list_test = open_data(args)
     value_limit_up = value_limit*100
     matrice = gener_matrice(value_limit_up, list_test)
     good_comp_and_action = gener_good_list(value_limit_up, list_test, matrice)
@@ -56,4 +63,4 @@ def optimized(value_limit, list_test):
 
     return best_benef, cost_action_best_comb, best_combinaison
 
-print(optimized(500, list_test))
+print(optimized(500, "docs/dataset2_Python+P7.csv"))
