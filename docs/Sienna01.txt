@@ -1,0 +1,8 @@
+https://s3-eu-west-1.amazonaws.com/course.oc-static.com/projects/Python+FR/845+Maitrise+Algorithmes+Python/solution1_Python+P7.txt
+
+Sienna bought:
+
+Share-GRUT
+
+Total cost: 498.76â‚¬
+Total return: 196.61â‚¬
