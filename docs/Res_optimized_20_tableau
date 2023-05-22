@@ -12,3 +12,5 @@ Action-4 | 70 | 14
 
 Total du cout des actions: 498 euro 
 Total du profit calcules des actions: 99.08000000000001 euro
+
+time.time() : 0.0019969940185546875 s

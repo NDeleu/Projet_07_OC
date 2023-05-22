@@ -22,5 +22,7 @@ Share-XJMO 9.39 3.7541219999999997
 Share-LRBZ 32.9 13.14355
 Share-IFCP 29.23 11.656924000000002
 
-Total cost: 499.96 € 
-Profit: 199.399402 €
+Total cost: 499.96 ï¿½ 
+Profit: 199.399402 ï¿½
+
+time.time() : 18.2979998588562 s

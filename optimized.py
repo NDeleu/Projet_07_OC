@@ -123,4 +123,3 @@ il peut changer en fonction de l'emplacement dans lequel vous avez enregistrez v
 
 En vous remerciant pour l'intérêt et le temps accordé à mon projet.
 """
-
