@@ -26,3 +26,10 @@ Total cost: 499.96 �
 Profit: 199.399402 �
 
 time.time() : 18.2979998588562 s
+Big-O :
+    complexite temporelle :     lineaire
+                                O(n)*investment_limit + O(n)
+                                O(2000)*500 + O(2000)
+    complexite spatiale :       lineaire
+                                O(n)*investment_limit
+                                O(2000)*500

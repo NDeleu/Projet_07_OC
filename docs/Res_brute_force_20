@@ -14,3 +14,10 @@ Total du cout des actions: 498 euro
 Total du profit calcules des actions: 99.08000000000001 euro
 
 time.time() : 1.2639977931976318 s
+Big-O :
+    complexite temporelle :     exponentielle
+                                O(n^2)
+                                O(20^2)
+    complexite spatiale :       exponentielle
+                                O(n^2)
+                                O(20^2)
