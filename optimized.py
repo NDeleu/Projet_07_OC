@@ -1,15 +1,53 @@
 import csv
+import sys
+import time
 
-"""
-En raison de la disposition des livrables, (un fichier.py par algorithme, pas plus)
-il m'était impossible de rajouter un document README.txt si je souhaitais respecter 
-les consignes du projet 07.
-Néanmoins il me tient à coeur de vous proposer une utilisation optimale, et compréhenssible
-de mon projet.
-Ainsi, en bas de script, vous retrouverez les indications permettant d'executer l'algorithme.
-"""
+def default_list():
+    list_test = [{"name": "Action-1", "amount": int((float(20)) * 100), "benefice": float(0.25)},
+                 {"name": "Action-2", "amount": int((float(30)) * 100), "benefice": float(3)},
+                 {"name": "Action-3", "amount": int((float(50)) * 100), "benefice": float(7.5)},
+                 {"name": "Action-4", "amount": int((float(70)) * 100), "benefice": float(14)},
+                 {"name": "Action-5", "amount": int((float(60)) * 100), "benefice": float(10.2)},
+                 {"name": "Action-6", "amount": int((float(80)) * 100), "benefice": float(20)},
+                 {"name": "Action-7", "amount": int((float(22)) * 100), "benefice": float(1.54)},
+                 {"name": "Action-8", "amount": int((float(26)) * 100), "benefice": float(2.86)},
+                 {"name": "Action-9", "amount": int((float(48)) * 100), "benefice": float(6.24)},
+                 {"name": "Action-10", "amount": int((float(34)) * 100), "benefice": float(9.18)},
+                 {"name": "Action-11", "amount": int((float(42)) * 100), "benefice": float(7.14)},
+                 {"name": "Action-12", "amount": int((float(110)) * 100), "benefice": float(9.90)},
+                 {"name": "Action-13", "amount": int((float(38)) * 100), "benefice": float(8.74)},
+                 {"name": "Action-14", "amount": int((float(14)) * 100), "benefice": float(0.14)},
+                 {"name": "Action-15", "amount": int((float(18)) * 100), "benefice": float(0.54)},
+                 {"name": "Action-16", "amount": int((float(8)) * 100), "benefice": float(0.64)},
+                 {"name": "Action-17", "amount": int((float(4)) * 100), "benefice": float(0.48)},
+                 {"name": "Action-18", "amount": int((float(10)) * 100), "benefice": float(1.4)},
+                 {"name": "Action-19", "amount": int((float(24)) * 100), "benefice": float(5.04)},
+                 {"name": "Action-20", "amount": int((float(114)) * 100), "benefice": float(20.52)}
+                 ]
+    return list_test
 
-def open_data(args):
+def open_data_20(cd_data):
+    list_test = []
+
+    print(cd_data)
+    with open(cd_data) as fichier_csv:
+
+        reader = csv.reader(fichier_csv, delimiter=",")
+        next(reader)
+
+        i = 0
+        for ligne in reader:
+            if i < 20:
+                if float(ligne[1]) > 0 and 0 < float(ligne[2]) <= 100:
+                    el_dict = {"name": ligne[0],
+                               "amount": int((float(ligne[1])) * 100),
+                               "benefice": (float(ligne[1]) * float(ligne[2])) / 100}
+                    list_test.append(el_dict)
+                    i += 1
+
+    return list_test
+
+def open_data_all(args):
     list_test = []
 
     for cd_data in args:
@@ -61,19 +99,7 @@ def gener_good_list(value_limit, list_test, matrice):
 def benef_action_comb(matrice):
     return matrice[-1][-1]
 
-def optimized(value_limit, *args):
-    list_test = open_data(args)
-    value_limit_up = value_limit*100
-    matrice = gener_matrice(value_limit_up, list_test)
-    good_comp_and_action = gener_good_list(value_limit_up, list_test, matrice)
-    best_combinaison = good_comp_and_action[0]
-    cost_action_best_comb = good_comp_and_action[1]
-    best_benef = benef_action_comb(matrice)
-
-    return best_benef, cost_action_best_comb, best_combinaison
-
-def print_optimized(value_limit, *args):
-    list_test = open_data(args)
+def optimized(value_limit, list_test):
     value_limit_up = value_limit*100
     matrice = gener_matrice(value_limit_up, list_test)
     good_comp_and_action = gener_good_list(value_limit_up, list_test, matrice)
@@ -86,40 +112,64 @@ def print_optimized(value_limit, *args):
         print(f"{el['name']} | {el['amount']} | {el['benefice']}")
     print(f"\nTotal du cout des actions: {cost_action_best_comb} euro \nTotal du profit calcules des actions: {best_benef} euro")
 
+def test_arg_one(el_tested):
+    try:
+        int(el_tested)
+    except ValueError:
+        return False
+    return True
 
-"""
-L'algorithme dynamique prend au minimum deux arguments:
-    Le coût maximal accordé par le client (dans notre exemple le coût total 
-        correspondra aux consigne du projet 7, soit 500).
-    Le chemin d'accès au document csv qui renseignera les données pour notre algorithme.
-Des exemples de renseignement d'arguments seront proposés en fin d'annotation.
 
-Néanmoins, par soucis de présentation, deux fonctions vous sont proposées :
-La première fonction :
-optimized(value_limit, *args)
-Elle renvoie un tuple, où vous retrouverai :
-    en indice 0 : Le bénéfice total calculé de la meilleure combinaison
-    en indice 1 : Le coût total de la meilleure combinaison
-    en indice 2 : Une liste de dictionnaire des meilleurs combinaisons avec leur nom, leur cout, et leur bénéfice calculé
+def test_input(input_tested):
+    try:
+        int(input_tested)
+    except ValueError:
+        return False
+    return True
 
-Le seconde fonction :
-print_optimized(value_limit, *args)
-Elle affichera en console une présentation des résultats ci dessus.
-L'objectif de cette fonction est d'améliorer la lisibilité du résultat de l'algorithme.
 
-Exemple de renseignement d'arguments :
+def input_enter_func():
+    input_enter = input(
+        "Saisissez 1 si vous désirez les 20 premières données\nSaisissez 2 si vous désirez l'ensemble des données\n")
+    if test_input(input_enter) is False:
+        print("Veillez saisir un entier , 1 ou 2\nExemple :\n1")
+        input_enter_func()
+    else:
+        return int(input_enter)
 
-Afficher le résultat de l'algorithme pour les 1 000 actions du dataset1 avec un cout maximal accordé de 500 :
-print_optimized(500, "docs/dataset1_Python+P7.csv")
+exemple_chemin = "C:\\Users\\ndele\\PycharmProjects\\Projet_07_OC\\docs\\dataset1_Python+P7.csv"
 
-Avoir un retour du résultat de l'algorithme pour les 1 000 actions du dataset2 avec un cout maximal accordé de 500 :
-optimized(500, "docs/dataset2_Python+P7.csv")
+if len(sys.argv) == 1:
+    print(f"Merci de renseigner au minimum un entier qui est le plafond du coût des actions a la suite de l'appel de l'algorithme. \nExemple :\npython optimized.py 500\nL'algorithme s'effectura alors sur le tableau test\nIl vous est possible de renseigner d'autres data en renseignant les chemins d acces des fichiers data\nExemple\npython optimized.py 500 chemindacces1\nVous pouvez aussi cumuler plusieurs fichiers data\nExemple\npython optimized.py 500 chemindacces1 chemindacces2\nExemples de chemin d acces:\n{exemple_chemin}")
+else:
+    if test_arg_one(sys.argv[1]) is True:
+        value_limit = int(sys.argv[1])
+        if len(sys.argv) == 2:
+            start_time = time.time()
+            optimized(value_limit, default_list())
+            end_time = time.time()
+            print("Temps d'execution : ", end_time - start_time)
+        else:
+            list_args = []
+            input_selected = input_enter_func()
+            for i in sys.argv:
+                if i == sys.argv[0]:
+                    pass
+                elif i == sys.argv[1]:
+                    pass
+                else:
+                    list_args.append(i)
+            if input_selected == 1:
+                start_time = time.time()
+                optimized(value_limit, open_data_20(list_args[0]))
+                end_time = time.time()
+                print("Temps d'execution : ", end_time - start_time)
+            elif input_selected == 2:
+                start_time = time.time()
+                optimized(value_limit, open_data_all(list_args))
+                end_time = time.time()
+                print("Temps d'execution : ", end_time - start_time)
+    else:
+        print(
+            "Merci de renseigner un entier pour le plafond du coût des actions comme premier argument. \nExemple :\npython optimized.py 500")
 
-Afficher le résultat de l'algorithme pour les 2 000 actions du dataset1 et du dataset2 avec un cout maximal accordé de 500 :
-print_optimized(500, "docs/dataset1_Python+P7.csv", "docs/dataset2_Python+P7.csv")
-
-note : le chemin d'accès proposé (exemple : "docs/dataset1_Python+P7.csv") est à titre d'exemple, 
-il peut changer en fonction de l'emplacement dans lequel vous avez enregistrez votre dataset.
-
-En vous remerciant pour l'intérêt et le temps accordé à mon projet.
-"""
